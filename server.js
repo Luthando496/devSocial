@@ -2,14 +2,14 @@ const dotenv = require('dotenv');
 const express = require('express');
 const AppError = require('./Config/appError')
 const morgan = require('morgan');
-// const user = require('./Routes/user')
+const user = require('./Routes/user')
 // const post = require('./Routes/Post')
 const DB = require('./Config/DB')
 const globalErrorHandler = require('./Config/errorController');
 const app = express()
 dotenv.config();
 
-// DB()
+DB()
 
 
 app.use(express.json())
