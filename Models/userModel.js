@@ -14,16 +14,12 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please provide your email'],
     unique: true,
     lowercase: true,
-    validate: [validator.isEmail, 'Please provide a valid email']
+    validate: [validator.default.isEmail, 'Please provide a valid email']
   },
   avatar: {
     type: String,
   },
-  role: {
-    type: String,
-    enum: ['user', 'guide', 'lead-guide', 'admin'],
-    default: 'user'
-  },
+
   password: {
     type: String,
     required: [true, 'Please provide a password'],
@@ -34,8 +30,9 @@ const userSchema = new mongoose.Schema({
     type:Date,
     default:Date.now()
   },
-  following:[{type:mongoose.SchemaTypes.ObjectId,ref:'User'}],
-  followers:[{type:mongoose.SchemaTypes.ObjectId,ref:'User'}],
+},{
+  toJSON:{virtuals:true},
+  toObject:{virtuals:true}
 });
 
 userSchema.pre('save', async function(next) {
