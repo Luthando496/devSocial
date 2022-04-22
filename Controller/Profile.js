@@ -1,6 +1,7 @@
 const User = require('../Models/userModel')
 const Profile = require('../Models/Profile')
 const handler = require('express-async-handler')
+const request = require('request')
 
 
 
@@ -93,6 +94,41 @@ exports.getAllProfiles= handler(async(req,res,next)=>{
 
 
 
+
+
+
+
+
+
+exports.getGithub= handler(async(req,res,next)=>{
+  
+  const options = {
+    uri:`https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${process.env.githubid}&client_secret=${process.env.githubsecret}`,
+    method:"GET",
+    headers:{'user-agent':'node.js'}
+  }
+  
+  request(options,(error,response,body)=>{
+    if(error)console.error(error)
+    
+    if(response.statusCode !== 200){
+      return res.status(404).json({message:"Github file not found"})
+    }
+    
+    
+    return res.json(JSON.parse(body))
+    
+  })
+
+  
+})
+
+
+
+
+
+
+
 exports.profileById = handler(async(req,res,next)=>{
   
   const profiles = await Profile.findOne({user:req.params.id}).populate('user',['name,avatar'])
@@ -135,6 +171,38 @@ exports.addExperience = handler(async(req,res,next)=>{
   };
   
   profile.experience.unshift(newExp)
+  
+  await profile.save()
+
+  
+  
+  return res.json(profile)
+  
+})
+
+
+
+
+
+
+
+exports.addEducation = handler(async(req,res,next)=>{
+  
+  const profile = await Profile.findOne({ user: req.user.id })
+
+  
+  const newExp = {
+    school: req.body.school,
+    degree: req.body.degree,
+    fieldofstudy: req.body.fieldofstudy,
+    location: req.body.location,
+    from: req.body.from,
+    to: req.body.to,
+    current: req.body.current,
+    description: req.body.description
+  };
+  
+  profile.education.unshift(newExp)
   
   await profile.save()
 

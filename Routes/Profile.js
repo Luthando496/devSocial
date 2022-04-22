@@ -8,6 +8,8 @@ router.route('/profile/me').get(user.protect,pro.getProfile).delete(user.protect
 router.route('/profile/me/create').patch(user.protect,pro.createProfile)
 router.route('/profiles/all').get(user.protect,pro.getAllProfiles)
 router.route('/profile/experience').patch(user.protect,pro.addExperience)
+router.route('/profile/education').patch(user.protect,pro.addEducation)
+router.route('/profile/github/:username').get(user.protect,pro.getGithub)
 
 
 module.exports = router;
