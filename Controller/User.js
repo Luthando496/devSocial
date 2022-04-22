@@ -80,3 +80,13 @@ exports.protect = async (req, res, next) => {
 };
 
 
+exports.loadUser = handler(async(req,res,next)=>{
+  
+  const user = await User.findById(req.user.id).select('-select')
+  const token = await signToken(user._id)
+  
+  res.status(200).json({user,token})
+  
+  
+})
+
