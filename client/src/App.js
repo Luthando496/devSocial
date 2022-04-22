@@ -1,24 +1,23 @@
-import logo from './logo.svg';
+import {React,Fragment} from 'react'
 import './App.css';
+import Navbar from './Components/Layout/Navbar';
+import Landing from './Components/Layout/Landing';
+import {BrowserRouter,Routes,Route,} from "react-router-dom";
+import Register from './Components/Layout/register';
+import Login from './Components/Layout/Login';
 
-function App() {
+const App=()=> {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+    <Fragment>
+     <Navbar />
+     <Routes>
+     <Route exact path='/' element={<Landing/>} />
+     <Route exact path='/register' element={<Register/>} />
+     <Route exact path='/login' element={<Login/>} />
+     </Routes>
+    </Fragment>
+    </BrowserRouter>
   );
 }
 
