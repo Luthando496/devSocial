@@ -83,7 +83,7 @@ exports.createProfile = handler(async(req,res,next)=>{
 
 exports.getAllProfiles= handler(async(req,res,next)=>{
   
-  const profiles = await Profile.find()
+  const profiles = await Profile.find().populate('user',['avatar','name'])
   if(!profiles){
     return res.json({message:"No profiles found"})
   }

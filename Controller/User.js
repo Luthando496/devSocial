@@ -2,7 +2,7 @@ const User = require('../Models/userModel')
 const handler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
 const { promisify } = require('util');
-
+const gravatar= require('gravatar')
 
 
 const signToken = id => {
@@ -14,8 +14,18 @@ const signToken = id => {
 
 
 exports.authUser = handler(async(req,res,next)=>{
+  const avatar = gravatar.url(req.body.email, {
+    s: '200', // Size
+    r: 'pg', // Rating
+    d: 'mm' // Default
+  });
   
-  const user = await User.create(req.body)
+  const user = await User.create({
+    name: req.body.name,
+    email: req.body.email,
+    avatar: req.body.avatar,
+    password: req.body.password
+  })
   
  const token = await signToken(user._id)
  console.log(token)

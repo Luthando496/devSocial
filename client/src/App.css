@@ -521,6 +521,10 @@ button {
     text-align: center;
     justify-content: center;
   }
+  
+  /* .dashboard .mt-5{
+    margin-top: 9rem;
+  } */
 
   .navbar h1 {
     margin-bottom: 1rem;

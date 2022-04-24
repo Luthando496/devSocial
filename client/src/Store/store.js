@@ -1,7 +1,8 @@
 import {createSlice,configureStore} from '@reduxjs/toolkit'
 
 
-const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : ''
+const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+
 
 const userSlice = createSlice({
     name:'user',
@@ -30,10 +31,10 @@ const userSlice = createSlice({
             state.isAuth = true
         },
         loadFail(state,action){
-            state.user = null
+            state.user = user
             state.err = action.payload
             state.loading = false
-            state.isAuth = false
+            state.isAuth = state.user ? true : false
         },
         register(state,action){
             state.user = action.payload
@@ -51,46 +52,44 @@ const userSlice = createSlice({
     }
 })
 
-// const postSlice = createSlice({
-//     name:'post',
-//     initialState:{post:'',loading:true,err:null,image:null,posts:''},
-//     reducers:{
+const profileSlice = createSlice({
+    name:'profile',
+    initialState:{profile:null,loading:false,err:null,repos:null,profiles:[]},
+    reducers:{
         
-//         loadingPage(state,action){
-//             state.loading = true
-//             state.err = null
-//             state.post = null
-            
-//         },
-//         newPost(state,action){
-//             state.post = action.payload
-//             state.loading = false
-//             state.err = null
-//         },
-//         postFail(state,action){
-//             state.post = null
-//             state.err = action.payload
-//             state.loading = false
-//         },
-//         imageLoad(state,action){
-//             state.image = action.payload
-//         },
-//         postLoad(state,action){
-//             state.posts = action.payload
-//         },
+        // ss
+        loadingPage(state,action){
+            state.loading = true
+        },
+        profileGet(state,action){
+            state.profile = action.payload
+            state.loading = false
+            state.err = null
+        },
+        profileFail(state,action){
+            state.profile = null
+            state.err = action.payload
+            state.loading = false
+        },
+        addExperience(state,action){
+            state.image = action.payload
+        },
+        postLoad(state,action){
+            state.posts = action.payload
+        },
 
-//     }
-// })
+    }
+})
 
 
-// export const postActions = postSlice.actions
-
+export const profileActions = profileSlice.actions
 
 export const userActions = userSlice.actions
 
 
 const store = configureStore({
-    reducer:{user:userSlice.reducer}
+    reducer:{user:userSlice.reducer,
+            profile:profileSlice.reducer}
 })
 
 

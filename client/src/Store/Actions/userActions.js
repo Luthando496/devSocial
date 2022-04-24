@@ -1,4 +1,4 @@
-import { userActions} from '../store'
+import { userActions,profileActions} from '../store'
 import axios from 'axios'
 
 
@@ -61,12 +61,16 @@ export const loginUser = (userdata)=>{
 export const loadUser = ()=>{
     return async (dispatch,useState) =>{
         try{
-            const token = useState().user.user.token
+            // const token = useState().user.user.token
             
+            dispatch(userActions.loadingPage())
+            
+            const token = JSON.parse(localStorage.getItem('user'))
+            console.log(token)
             const config = {
                 headers: {
                 //   'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`,
+                  Authorization: `Bearer ${token.token}`,
                 },
               }
             
@@ -104,102 +108,110 @@ export const loadUser = ()=>{
 
 
 
-// export const uploadIMage = (file)=>{
-//     return async (dispatch,useState) =>{
-//         try{
-//             const token = useState().user.user.token
-//             console.log(file)
+export const getProfile = ()=>{
+    return async (dispatch,useState) =>{
+        try{
             
-//             const config = {
-//                 headers: {
-//                 //   'Content-Type': 'application/json',
-//                   Authorization: `Bearer ${token}`,
-//                 },
-//               }
+            dispatch(profileActions.loadingPage())
             
-//             const {data}= await axios.post('/users/post/post-image',file,config)
-//             console.log(data)
+            const token = useState().user.user.token
             
+            const config = {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
             
-            
-            
-//             dispatch(postActions.imageLoad(data))
+            const {data}= await axios.get('/profile/me',config)
+            console.log(data)
             
             
-//         }catch(err){
-//             dispatch(postActions.postFail(err.response && err.response.data.message
-//                 ? err.response.data.message
-//                 : err.message))
-//             console.log(err.response && err.response.data.message
-//                 ? err.response.data.message
-//                 : err.message)
             
-//         }
-//     }
-// }
+            
+            dispatch(profileActions.profileGet(data))
+            
+            
+        }catch(err){
+            dispatch(profileActions.profileFail(err.response && err.response.data.message
+                ? err.response.data.message
+                : err.message))
+            console.log(err.response && err.response.data.message
+                ? err.response.data.message
+                : err.message)
+            
+        }
+    }
+}
 
 
 
 
-// export const userPosts = ()=>{
-//     return async (dispatch,useState) =>{
-//         try{
+export const createProfile = (datar)=>{
+    return async (dispatch,useState) =>{
+        try{
             
-//             const token = useState().user.user.token
+            // const token = useState().user.user.token
+            // dispatch(profileActions.loadingPage())
             
-//             const config = {
-//                 headers: {
-//                 //   'Content-Type': 'application/json',
-//                   Authorization: `Bearer ${token}`,
-//                 },
-//               }
+            const token = JSON.parse(localStorage.getItem('user'))
+            console.log(token)
             
-            
-//             const {data} = await axios.get('/users/posts/user-post',config)
-            
-            
-            
-//             dispatch(postActions.postLoad(data))
+            const config = {
+                headers: {
+                //   'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token.token}`,
+                },
+              }
             
             
-//         }catch(err){
-//             dispatch(postActions.postFail(err.response && err.response.data.message
-//                 ? err.response.data.message
-//                 : err.message))
+            const {data} = await axios.patch('/profile/me/create',datar,config)
             
-//         }
-//     }
-// }
+            
+            
+            dispatch(profileActions.profileGet(data))
+            
+            
+        }catch(err){
+            dispatch(profileActions.profileFail(err.response && err.response.data.message
+                ? err.response.data.message
+                : err.message))
+            
+        }
+    }
+}
 
 
 
-// export const deleteUserPosts = (id)=>{
-//     return async (dispatch,useState) =>{
-//         try{
+export const addExperience = (datar)=>{
+    return async (dispatch,useState) =>{
+        try{
             
-//             const token = useState().user.user.token
+            dispatch(profileActions.loadingPage())
             
-//             const config = {
-//                 headers: {
-//                 //   'Content-Type': 'application/json',
-//                   Authorization: `Bearer ${token}`,
-//                 },
-//               }
+            const token = useState().user.user.token
             
-            
-//             await axios.delete(`/users/posts/user-post/${id}`,config)
-            
+            const config = {
+                headers: {
+                //   'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
+                },
+              }
             
             
+          const {data} = await axios.patch(`/profile/experience`,datar,config)
             
-//         }catch(err){
-//             dispatch(postActions.postFail(err.response && err.response.data.message
-//                 ? err.response.data.message
-//                 : err.message))
+        dispatch(profileActions.profileGet(data))
             
-//         }
-//     }
-// }
+            
+            
+        }catch(err){
+            dispatch(profileActions.profileFail(err.response && err.response.data.message
+                ? err.response.data.message
+                : err.message))
+            
+        }
+    }
+}
 
 
 
