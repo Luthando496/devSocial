@@ -19,8 +19,11 @@ const Navbar = () => {
           <li><Link to="/profiles">Developers</Link></li>
         <li><Link to="/register">Register</Link></li>
         <li><Link to="/login">Login</Link></li></ul>):( 
-        <ul><li><Link to="/dashboard"><i className="fas fa-code"></i> Dashboard</Link></li>
-        <li><Link to="/">Logout</Link></li></ul>)}
+        <ul>
+          <li><Link to="/dashboard"><i className="fas fa-code"></i> Dashboard</Link></li>
+        <li><Link to="/">Logout</Link></li>
+        <li><Link to="/profiles">Profiles</Link></li>
+        </ul>)}
     </nav>
       
     </Fragment>

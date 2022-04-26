@@ -1,17 +1,16 @@
 import React,{useState,Fragment} from 'react'
 import { useDispatch,useSelector} from 'react-redux'
 import {Link,useNavigate} from 'react-router-dom'
-import {addExperience} from '../../Store/Actions/userActions'
-import Spinner from './Spinner' 
-
-
-const Experience = () => {
+import {addEducation} from '../../Store/Actions/userActions'
+import Spinner from './Spinner'
+ 
+const Education = () => {
   
   const [formData,setForm] = useState({
     
-    title: "",
-    company: "",
-    location: "",
+    school: "",
+    degree: "",
+    fieldofstudy: "",
     from: "",
     to:"",
     current:false ,
@@ -21,7 +20,7 @@ const Experience = () => {
   const loading = useSelector(state => state.profile.loading)
   const navigate = useNavigate()
   
-  const {to,current,description,title,company,location,from,} = formData;
+  const {to,current,description,school,degree,fieldofstudy,from,} = formData;
   const [toggleShow,setToggle]= useState(false);
   
   
@@ -34,7 +33,7 @@ const Experience = () => {
   const Submit =(e) =>{
     e.preventDefault()
     console.log(formData)
-    dispatch(addExperience(formData))
+    dispatch(addEducation(formData))
     navigate('/dashboard')
     
   }
@@ -46,21 +45,21 @@ const Experience = () => {
        Add An Experience
       </h1>
       <p className="lead">
-        <i className="fas fa-code-branch"></i> Add any developer/programming
-        positions that you have had in the past
+        <i className="fas fa-code-branch"></i> Add any School/Bootcamp
+        you attended in the past.
       </p>
       <small>* = required field</small>
       {loading ? <Spinner/> : (
       <form className="form" onSubmit={Submit}>
         <div className="form-group">
-          <input type="text" placeholder="* Job Title" name="title" required 
-          value={title} onChange={(e)=> change(e)}/>
+          <input type="text" placeholder="* School" name="school" required 
+          value={school} onChange={(e)=> change(e)}/>
         </div>
         <div className="form-group">
-          <input type="text" placeholder="* Company" name="company" required value={company} onChange={(e)=> change(e)} />
+          <input type="text" placeholder="* degree" name="degree" required value={degree} onChange={(e)=> change(e)} />
         </div>
         <div className="form-group">
-          <input type="text" placeholder="Location" name="location" value={location} onChange={(e)=> change(e)} />
+          <input type="text" placeholder="fieldofstudy" name="fieldofstudy" value={fieldofstudy} onChange={(e)=> change(e)} />
         </div>
         <div className="form-group">
           <h4>From Date</h4>
@@ -95,4 +94,4 @@ const Experience = () => {
 }
 
 
-export default Experience;
+export default Education;

@@ -219,32 +219,37 @@ export const addExperience = (datar)=>{
 
 
 
-// export const findPeople = ()=>{
-//     return async (dispatch,useState) =>{
-//         try{
-            
-//             const token = useState().user.user.token
-            
-//             const config = {
-//                 headers: {
-//                   Authorization: `Bearer ${token}`,
-//                 },
-//               }
-            
-            
-//            const {data} = await axios.get(`/users/posts/p/find-people`,config)
-//            dispatch(userActions.peopleFind(data))
-            
-            
-            
-//         }catch(err){
-//             dispatch(userActions.peopleFail(err.response && err.response.data.message
-//                 ? err.response.data.message
-//                 : err.message))
-            
-//         }
-//     }
-// }
+export const addEducation = (datar)=>{
+
+return async (dispatch,useState) =>{
+    try{
+        
+        dispatch(profileActions.loadingPage())
+        
+        const token = useState().user.user.token
+        
+        const config = {
+            headers: {
+            //   'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        
+        
+      const {data} = await axios.patch(`/profile/education`,datar,config)
+        
+    dispatch(profileActions.profileGet(data))
+        
+        
+        
+    }catch(err){
+        dispatch(profileActions.profileFail(err.response && err.response.data.message
+            ? err.response.data.message
+            : err.message))
+        
+    }
+}
+}
 
 
 
@@ -253,42 +258,111 @@ export const addExperience = (datar)=>{
 
 
 
+export const getProfileByID = (id)=>{
+
+return async (dispatch,useState) =>{
+    try{
+        
+        dispatch(profileActions.loadingPage())
+        
+        const token = useState().user.user.token
+        
+        const config = {
+            headers: {
+            //   'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        
+        
+      const {data} = await axios.get(`/profile/user/${id}`,config)
+        
+    dispatch(profileActions.profileId(data))
+        
+        
+        
+    }catch(err){
+        dispatch(profileActions.profileIdFail(err.response && err.response.data.message
+            ? err.response.data.message
+            : err.message))
+        
+    }
+}
+}
 
 
 
 
 
-// export const unfollowUser = (id)=>{
-//     return async (dispatch,useState) =>{
-//         try{
+
+export const getProfiles = ()=>{
+
+    return async (dispatch,useState) =>{
+        try{
             
-//             const token = useState().user.user.token
+            dispatch(profileActions.loadingPage())
             
-//             const config = {
-//                 headers: {
-//                   Authorization: `Bearer ${token}`,
-//                 },
-//               }
+            const token = useState().user.user.token
             
-            
-//             const {data} = await axios.put(`/users/posts/unfollow-user`,{_id:id},config)
-            
-//               dispatch(userActions.followP(data))
-//               localStorage.removeItem('user')
-//             localStorage.setItem('user',JSON.stringify(data))
-              
-              
+            const config = {
+                headers: {
+                //   'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
+                },
+              }
             
             
+          const {data} = await axios.get(`/profiles/all`,config)
             
-//         }catch(err){
-//             dispatch(userActions.peopleFail(err.response && err.response.data.message
-//                 ? err.response.data.message
-//                 : err.message))
+        dispatch(profileActions.profilesGet(data))
             
-//         }
-//     }
-// }
+            
+            
+        }catch(err){
+            dispatch(profileActions.profilesFail(err.response && err.response.data.message
+                ? err.response.data.message
+                : err.message))
+            
+        }
+    }
+    }
+
+
+
+
+
+
+    export const getRepos = (username)=>{
+
+        return async (dispatch,useState) =>{
+            try{
+                
+                dispatch(profileActions.loadingPage())
+                
+                const token = useState().user.user.token
+                
+                const config = {
+                    headers: {
+                    //   'Content-Type': 'application/json',
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                
+                
+              const {data} = await axios.patch(`/profile/github/${username}`,config)
+                
+            dispatch(profileActions.getRepos(data))
+                
+                
+                
+            }catch(err){
+                dispatch(profileActions.getReposFail(err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message))
+                
+            }
+        }
+        }
 
 
 

@@ -42,8 +42,9 @@ exports.createProfile = handler(async(req,res,next)=>{
       profileFields.githubusername = req.body.githubusername;
     // Skills - Spilt into array
     if (typeof req.body.skills !== 'undefined') {
-      profileFields.skills = req.body.skills
+      profileFields.skills = req.body.skills.split(',')
     }
+    
     console.log(profileFields.skills)
 
     // Social
@@ -131,12 +132,12 @@ exports.getGithub= handler(async(req,res,next)=>{
 
 exports.profileById = handler(async(req,res,next)=>{
   
-  const profiles = await Profile.findOne({user:req.params.id}).populate('user',['name,avatar'])
-  if(!profiles){
+  const profile = await Profile.findOne({user:req.params.id}).populate('user','name')
+  if(!profile){
     return res.json({message:"No profiles found for this user"})
   }
   
-  return res.json(profiles)
+  return res.json(profile)
   
 })
 

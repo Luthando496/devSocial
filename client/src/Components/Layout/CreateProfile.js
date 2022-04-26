@@ -37,6 +37,7 @@ const CreateProfile=() =>{
     e.preventDefault()
     console.log(formData)
     dispatch(createProfile(formData))
+    navigate('/dashboard')
     
   }
   

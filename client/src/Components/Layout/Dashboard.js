@@ -22,7 +22,10 @@ const Dashboard=()=> {
   return (
     <section className='container '>
       <h1>Dashboard of <i className='fas fa-user px-2'></i>{user && user.user.name}</h1>
-      {profile === null? <Link to='/profile/create-profile'><h2 className='mt-4 btn btn-info'>Please Create A Profile</h2></Link>:<h3>{profile.githubusername}</h3>}
+      {profile === null? <Link to='/profile/create-profile'><h2 className='mt-4 btn btn-info'>Add Profile</h2></Link>:<Fragment>
+        <Link to='/profile/create-exp' className='btn btn-info'>Add Experience</Link>
+        <Link to='/profile/create-edu' className='btn btn-info'>Add Education</Link>
+        </Fragment>}
       
       
      <h2 className='my-5'>Experience Credintials</h2>

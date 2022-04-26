@@ -10,7 +10,10 @@ import {loadUser} from './Store/Actions/userActions'
 import Dashboard from './Components/Layout/Dashboard';
 import CreateProfile from './Components/Layout/CreateProfile';
 import Experience from './Components/Layout/Experience';
+import Education from './Components/Layout/Education';
 import Footer from './Components/Layout/Footer';
+import Profiles from './Components/Layout/Profiles';
+import Profile from './Components/Layout/Profile';
 
 
 
@@ -33,6 +36,9 @@ const App=()=> {
      <Route exact path='/dashboard' element={<Dashboard/>} />
      <Route exact path='/profile/create-profile' element={<CreateProfile/>} />
      <Route exact path='/profile/create-exp' element={<Experience/>} />
+     <Route exact path='/profile/create-edu' element={<Education/>} />
+     <Route exact path='/profiles' element={<Profiles/>} />
+     <Route exact path='/user/profile/:id' element={<Profile/>} />
      </Routes>
      <Footer />
     </Fragment>

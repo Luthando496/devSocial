@@ -54,11 +54,11 @@ const userSlice = createSlice({
 
 const profileSlice = createSlice({
     name:'profile',
-    initialState:{profile:null,loading:false,err:null,repos:null,profiles:[]},
+    initialState:{profile:null,loading:false,err:null,repos:null,profiles:[],singlePro:null,repos:null},
     reducers:{
         
         // ss
-        loadingPage(state,action){
+        loadingPage(state){
             state.loading = true
         },
         profileGet(state,action){
@@ -73,10 +73,41 @@ const profileSlice = createSlice({
         },
         addExperience(state,action){
             state.image = action.payload
+            state.loading = false
         },
         postLoad(state,action){
             state.posts = action.payload
+            state.loading = false
         },
+        profilesGet(state,action){
+            state.loading = false
+            state.profiles = action.payload
+        },
+        profilesFail(state,action){
+            state.profiles = null
+            state.err = action.payload
+            state.loading = false
+        },
+        profileId(state,action){
+            state.singlePro = action.payload
+            state.loading = false
+        },
+        profileIdFail(state,action){
+            state.err = action.payload
+            state.loading = false
+            state.singlePro = null
+        },
+        getRepos(state,action){
+            state.repos = action.payload
+            state.loading = false
+        },
+        profileIdFail(state,action){
+            state.err = action.payload
+            state.loading = false
+            state.repos = null
+        },
+        
+        
 
     }
 })
