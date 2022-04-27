@@ -453,10 +453,27 @@ button {
   flex-basis: 20%;
 }
 
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
 /* Posts Page */
 .post-form .post-form-header {
   background: var(--primary-color);
   padding: 0.5rem;
+
+}
+.posts{
+  margin-top: 92px;
+  padding-top: 90px;
 }
 
 .post {

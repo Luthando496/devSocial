@@ -14,6 +14,7 @@ import Education from './Components/Layout/Education';
 import Footer from './Components/Layout/Footer';
 import Profiles from './Components/Layout/Profiles';
 import Profile from './Components/Layout/Profile';
+import Posts from './Components/Pages/Posts';
 
 
 
@@ -27,11 +28,12 @@ const App=()=> {
   },[dispatch])
   return (
     <BrowserRouter>
-    <Fragment>
+    <div id='page-container'>
      <Navbar />
      <Routes>
      <Route exact path='/' element={<Landing/>} />
      <Route exact path='/register' element={<Register/>} />
+     <Route exact path='/posts' element={<Posts/>} />
      <Route exact path='/login' element={<Login/>} />
      <Route exact path='/dashboard' element={<Dashboard/>} />
      <Route exact path='/profile/create-profile' element={<CreateProfile/>} />
@@ -41,7 +43,7 @@ const App=()=> {
      <Route exact path='/user/profile/:id' element={<Profile/>} />
      </Routes>
      <Footer />
-    </Fragment>
+    </div>
     </BrowserRouter>
   );
 }

@@ -1,4 +1,4 @@
-import { userActions,profileActions} from '../store'
+import { userActions,profileActions,postsActions} from '../store'
 import axios from 'axios'
 
 
@@ -332,7 +332,7 @@ export const getProfiles = ()=>{
 
 
 
-    export const getRepos = (username)=>{
+export const getRepos = (username)=>{
 
         return async (dispatch,useState) =>{
             try{
@@ -374,34 +374,34 @@ export const getProfiles = ()=>{
 
 
 
-// export const follow = (id)=>{
-//     return async (dispatch,useState) =>{
-//         try{
-            
-//             const token = useState().user.user.token
-            
-//             const config = {
-//                 headers: {
-//                   Authorization: `Bearer ${token}`,
-//                 },
-//               }
-            
-            
-//             const {data} = await axios.put(`/users/posts/follow-user`,{_id:id},config)
-            
-//               dispatch(userActions.followP(data))
-//               localStorage.removeItem('user')
-//             localStorage.setItem('user',JSON.stringify(data))
-              
-              
-            
-            
-            
-//         }catch(err){
-//             dispatch(userActions.peopleFail(err.response && err.response.data.message
-//                 ? err.response.data.message
-//                 : err.message))
-            
-//         }
-//     }
-// }
+export const getAllPosts = ()=>{
+
+        return async (dispatch,useState) =>{
+            try{
+                
+                dispatch(postsActions.loadingPage())
+                
+                const token = useState().user.user.token
+                
+                const config = {
+                    headers: {
+                    //   'Content-Type': 'application/json',
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                
+                
+              const {data} = await axios.get(`/posts`,config)
+                
+            dispatch(postsActions.postsAllGet(data))
+                
+                
+                
+            }catch(err){
+                dispatch(postsActions.postsFail(err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message))
+                
+            }
+        }
+        }

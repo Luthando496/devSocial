@@ -113,14 +113,78 @@ const profileSlice = createSlice({
 })
 
 
+const postsSlice = createSlice({
+    name:'posts',
+    initialState:{post:null,loading:false,err:null,posts:[],},
+    reducers:{
+        
+        // ss
+        loadingPage(state){
+            state.loading = true
+        },
+        postsAllGet(state,action){
+            state.posts = action.payload
+            state.loading = false
+            state.err = null
+        },
+        postsFail(state,action){
+            state.posts = null
+            state.err = action.payload
+            state.loading = false
+        },
+        singlePost(state,action){
+            state.post = action.payload
+            state.loading = false
+        },
+        singleFail(state,action){
+            state.post = action.payload
+            state.loading = false
+        },
+        // profilesGet(state,action){
+        //     state.loading = false
+        //     state.profiles = action.payload
+        // },
+        // profilesFail(state,action){
+        //     state.profiles = null
+        //     state.err = action.payload
+        //     state.loading = false
+        // },
+        // profileId(state,action){
+        //     state.singlePro = action.payload
+        //     state.loading = false
+        // },
+        // profileIdFail(state,action){
+        //     state.err = action.payload
+        //     state.loading = false
+        //     state.singlePro = null
+        // },
+        // getRepos(state,action){
+        //     state.repos = action.payload
+        //     state.loading = false
+        // },
+        // profileIdFail(state,action){
+        //     state.err = action.payload
+        //     state.loading = false
+        //     state.repos = null
+        // },
+        
+        
+
+    }
+})
+
+
+
 export const profileActions = profileSlice.actions
+export const postsActions = postsSlice.actions
 
 export const userActions = userSlice.actions
 
 
 const store = configureStore({
     reducer:{user:userSlice.reducer,
-            profile:profileSlice.reducer}
+            profile:profileSlice.reducer,
+            post:postsSlice.reducer}
 })
 
 
