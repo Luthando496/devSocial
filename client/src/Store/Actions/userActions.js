@@ -405,3 +405,69 @@ export const getAllPosts = ()=>{
             }
         }
         }
+        
+        
+export const like = (id)=>{
+
+        return async (dispatch,useState) =>{
+            try{
+                
+                dispatch(postsActions.loadingPage())
+                
+                const token = useState().user.user.token
+                
+                const config = {
+                    headers: {
+                    //   'Content-Type': 'application/json',
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                
+                
+               await axios.patch(`/post/likes/${id}`,'',config)
+                
+            // dispatch(postsActions.postsAllGet(data))
+                
+                
+                
+            }catch(err){
+                dispatch(postsActions.postsFail(err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message))
+                
+            }
+        }
+        }
+        
+        
+        export const unlike = (id)=>{
+
+            return async (dispatch,useState) =>{
+                try{
+                    
+                    dispatch(postsActions.loadingPage())
+                    
+                    const token = useState().user.user.token
+                    
+                    const config = {
+                        headers: {
+                        //   'Content-Type': 'application/json',
+                          Authorization: `Bearer ${token}`,
+                        },
+                      }
+                    
+                    
+                   await axios.patch(`/post/unlike/${id}`,'',config)
+                    
+                // dispatch(postsActions.postsAllGet(data))
+                    
+                    
+                    
+                }catch(err){
+                    dispatch(postsActions.postsFail(err.response && err.response.data.message
+                        ? err.response.data.message
+                        : err.message))
+                    
+                }
+            }
+            }

@@ -1,28 +1,41 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
 import {useDispatch,useSelector} from 'react-redux'
-import {getAllPosts} from '../../Store/Actions/userActions'
+import {getAllPosts,like,unlike} from '../../Store/Actions/userActions'
 import Spinner from '../Layout/Spinner'
 import image from '../Layout/kindpng_214439.png'
 import moment from 'moment'
 
 
 const Posts=()=> {
-  
+  const [liked,setLiked] = useState(false)
   const loading = useSelector(state => state.post.loading) 
   const dispatch = useDispatch()
   const posts = useSelector(state => state.post.posts) 
   const user = useSelector(state => state.user.user) 
-  console.log(posts)
   
   
+  const Like =(id)=>{
+    dispatch(like(id))
+    dispatch(getAllPosts())
+    setLiked(true)
+    
+  }
   
+  const Unlike =(id)=>{
+    dispatch(unlike(id))
+    dispatch(getAllPosts())
+    setLiked(false)
+    
+    
+  }
   
   useEffect(()=>{
     dispatch(getAllPosts())
   },[dispatch])
   return (
           loading ? <Spinner/> : posts  ? (<div class="posts">
+            <div className='container'>
             <h1 className="large text-primary">hello sir</h1>
         {posts.map(p => (
           <div class="post bg-white p-1 my-1">
@@ -43,28 +56,29 @@ const Posts=()=> {
              <p class="post-date">
                 Posted on {moment(p.date).format('YYYY MM DD')}
             </p>
-            <button type="button" class="btn btn-light">
-              <i class="fas fa-thumbs-up"></i>
+            <button type="button" class="btn btn-light" onClick={()=> Like(p._id)}>
+              <i class='fas fa-thumbs-up'></i>
               <span>{p.likes.length}</span>
             </button>
-            <button type="button" class="btn btn-light">
+            <button type="button" class="btn btn-light" onClick={()=> Unlike(p._id)}>
               <i class="fas fa-thumbs-down"></i>
             </button>
             <Link to="/post" class="btn btn-primary">
               Discussion <span class='comment-count'>{p.comments.length}</span>
             </Link>
-            {user && user.user.id === p.user && (
+            {user && user.user.id === p.user.toString() && (
             <button      
             type="button"
             class="btn btn-danger"
           >
             <i class="fas fa-times"></i>
-           Delete</button>
+           {' '}Delete</button>
               
             )}
           </div>
         </div>
         ))}
+        </div>
         
 
         {/* <div class="post bg-white p-1 my-1">
